@@ -43,7 +43,7 @@ class AirplaneDaoTest {
     @Test
     void testAddAndDeleteAirplane() {
         int airplaneID = 100;
-        Airplane airplane = new Airplane(airplaneID, "Model X", 20, 150, 8);
+        Airplane airplane = new Airplane(airplaneID, "Test", 20, 150, 8);
 
         try {
             // Add airplane

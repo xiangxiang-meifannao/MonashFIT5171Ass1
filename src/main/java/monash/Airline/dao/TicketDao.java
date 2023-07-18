@@ -76,4 +76,20 @@ public class TicketDao {
 
         return ticket;
     }
+
+    public void updateTicket(Ticket ticket) {
+        try (Connection connection = DatabaseUtil.getConnection()) {
+            String sql = "UPDATE ticket SET FlightID=?, classVip=?, status=?, PassengerID=? WHERE ticket_id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, ticket.getFlight().getFlightID());
+            statement.setBoolean(2, ticket.getClassVip());
+            statement.setBoolean(3, ticket.ticketStatus());
+            statement.setInt(4, ticket.getPassenger().getPassengerID());
+            statement.setInt(5, ticket.getTicket_id());
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,11 +1,10 @@
 package monash.Airline.collection;
 
 import monash.Airline.dao.TicketDao;
-import monash.Airline.entity.Flight;
 import monash.Airline.entity.Ticket;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class TicketCollection {
 	
@@ -20,12 +19,13 @@ public class TicketCollection {
 		TicketCollection.tickets.addAll(tickets_db);
 	}
 	
-	public static void getAllTickets() {
+	public static ArrayList<Ticket> getAllTickets() {
     	//display all available tickets from the Ticket collection
 		ArrayList<Ticket> allTickets = ticketDao.getAllTickets();
 		for (Ticket ticket : allTickets) {
 			System.out.println(ticket.toString());
 		}
+		return allTickets;
 	}
 	public static Ticket getTicketInfo(int ticket_id) {
     	//SELECT a ticket where ticket id = ticket_id

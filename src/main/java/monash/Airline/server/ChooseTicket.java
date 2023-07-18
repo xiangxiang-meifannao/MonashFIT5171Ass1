@@ -2,7 +2,9 @@ package monash.Airline.server;
 import monash.Airline.collection.FlightCollection;
 import monash.Airline.collection.TicketCollection;
 import monash.Airline.entity.Flight;
+import monash.Airline.entity.Ticket;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ChooseTicket{
@@ -25,17 +27,20 @@ public class ChooseTicket{
         
         
         if(flight != null) {
-        	
-        	TicketCollection.getAllTickets();
-       
-	        System.out.println("\nEnter ID of ticket you want to choose:");
+
+			ArrayList<Ticket> tickets = TicketCollection.getAllTickets();
+
+			System.out.println("\nEnter ID of ticket you want to choose:");
 	        
 	        int ticket_id = in.nextInt();
 	        
 	        //validate ticker here
-	        
-	        //buy ticket here
-	        buyTicket.buyTicket(ticket_id);
+			for (Ticket ticket : tickets) {
+				if (ticket.getTicket_id() == ticket_id){
+					//buy ticket here
+					buyTicket.buyTicket(ticket_id);
+				}
+			}
         }
         else
             //in case there is no direct ticket from city1 to city2

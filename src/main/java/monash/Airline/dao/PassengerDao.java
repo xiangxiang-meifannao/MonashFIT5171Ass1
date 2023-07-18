@@ -72,10 +72,12 @@ public class PassengerDao {
         return passenger;
     }
 
-    public void addPassenger(Passenger passenger) {
+    public int addPassenger(Passenger passenger) {
+        int generatedID = -1;
+
         try (Connection connection = DatabaseUtil.getConnection()) {
-            String sql = "INSERT INTO passenger (firstName, secondName, age, gender, email, phoneNumber, cardNumber, securityCode, passport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            String sql = "INSERT INTO passenger (firstName, secondName, age, gender, email, phoneNumber, cardNumber, securityCode, passport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, passenger.getFirstName());
             statement.setString(2, passenger.getSecondName());
             statement.setInt(3, passenger.getAge());
@@ -88,10 +90,18 @@ public class PassengerDao {
 
             statement.executeUpdate();
 
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                generatedID = generatedKeys.getInt(1);
+            }
+
+            generatedKeys.close();
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return generatedID;
     }
 
     public void deletePassenger(int passengerID) {

@@ -2,6 +2,7 @@ package monash.Airline.entity;
 
 public class Passenger extends Person
 {
+    private int passengerID;//新增加一个字段
     private String email;
     private String phoneNumber;
     private String cardNumber;
@@ -93,6 +94,14 @@ public class Passenger extends Person
     @Override
     public int getAge() {
         return super.getAge();
+    }
+
+    public int getPassengerID() {
+        return passengerID;
+    }
+
+    public void setPassengerID(int passengerID) {
+        this.passengerID = passengerID;
     }
 
     @Override
