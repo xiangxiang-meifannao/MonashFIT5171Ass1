@@ -1,4 +1,8 @@
-package fit5171.monash.edu;
+package monash.Airline.entity;
+
+import monash.Airline.entity.Flight;
+import monash.Airline.entity.Passenger;
+
 public class Ticket
 {
     private int ticket_id;

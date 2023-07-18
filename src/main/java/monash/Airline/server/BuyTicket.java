@@ -1,9 +1,13 @@
-package fit5171.monash.edu;
+package monash.Airline.server;
 
-import java.sql.*;
+import monash.Airline.collection.FlightCollection;
+import monash.Airline.collection.TicketCollection;
+import monash.Airline.entity.Airplane;
+import monash.Airline.entity.Flight;
+import monash.Airline.entity.Passenger;
+import monash.Airline.entity.Ticket;
+
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class BuyTicket <T>
@@ -24,7 +28,7 @@ public class BuyTicket <T>
     {
         try
         {
-            System.out.println("You have bought a ticket for flight " + ticket.flight.getDepartFrom() + " - " + ticket.flight.getDepartTo() + "\n\nDetails:");
+            System.out.println("You have bought a ticket for flight " + ticket.getFlight().getDepartFrom() + " - " + ticket.getFlight().getDepartTo() + "\n\nDetails:");
             System.out.println(this.ticket.toString());
         }
         catch (NullPointerException e)

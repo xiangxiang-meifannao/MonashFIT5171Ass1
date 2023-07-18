@@ -1,7 +1,8 @@
-package fit5171.monash.edu;
+package monash.Airline.entity;
+
+import monash.Airline.entity.Airplane;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 public class Flight {
     private int flightID;

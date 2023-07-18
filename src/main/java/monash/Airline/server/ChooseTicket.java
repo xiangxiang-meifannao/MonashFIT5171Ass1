@@ -1,6 +1,8 @@
-package fit5171.monash.edu;
-import java.sql.*;
-import java.util.ArrayList;
+package monash.Airline.server;
+import monash.Airline.collection.FlightCollection;
+import monash.Airline.collection.TicketCollection;
+import monash.Airline.entity.Flight;
+
 import java.util.Scanner;
 
 public class ChooseTicket{

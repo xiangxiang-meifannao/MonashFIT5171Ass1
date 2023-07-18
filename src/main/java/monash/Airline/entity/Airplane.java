@@ -1,4 +1,4 @@
-package fit5171.monash.edu;
+package monash.Airline.entity;
 
 public class Airplane
 {

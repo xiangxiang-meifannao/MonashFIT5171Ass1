@@ -1,4 +1,7 @@
-package fit5171.monash.edu;
+package monash.Airline.collection;
+
+import monash.Airline.entity.Flight;
+import monash.Airline.entity.Ticket;
 
 import java.util.ArrayList;
 
