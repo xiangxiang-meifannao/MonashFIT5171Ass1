@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PassengerDao {
-    public List<Passenger> getAllPassengers() {
-        List<Passenger> passengers = new ArrayList<>();
+    public ArrayList<Passenger> getAllPassengers() {
+        ArrayList<Passenger> passengers = new ArrayList<>();
 
         try (Connection connection = DatabaseUtil.getConnection()) {
             String sql = "SELECT * FROM passenger";
