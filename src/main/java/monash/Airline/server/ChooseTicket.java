@@ -13,7 +13,7 @@ public class ChooseTicket{
     
 	Scanner in = new Scanner(System.in);
 
-    public void chooseTicket(String city1, String city2) throws Exception
+    public boolean chooseTicket(String city1, String city2) throws Exception
     {
     	int counter = 1;
     	int idFirst = 0;
@@ -31,7 +31,7 @@ public class ChooseTicket{
 			ArrayList<Ticket> tickets = TicketCollection.getAllTickets();
 
 			System.out.println("\nEnter ID of ticket you want to choose:");
-	        
+
 	        int ticket_id = in.nextInt();
 	        
 	        //validate ticker here
@@ -39,6 +39,7 @@ public class ChooseTicket{
 				if (ticket.getTicket_id() == ticket_id){
 					//buy ticket here
 					buyTicket.buyTicket(ticket_id);
+					return true;
 				}
 			}
         }
@@ -75,10 +76,12 @@ public class ChooseTicket{
         	if(counter == 1)
             {
                 System.out.println("There is no possible variants.");
+				return false;
             }
-            return;
+            return true;
         }
 
-    }
+		return false;
+	}
 	
 }

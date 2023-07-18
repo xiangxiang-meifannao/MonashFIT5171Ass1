@@ -40,7 +40,7 @@ public class BuyTicket <T>
         }
     }
 
-    public void buyTicket(int ticket_id) throws Exception
+    public boolean buyTicket(int ticket_id) throws Exception
         //method for buying one ticket with direct flight
     {
         int flight_id = 0;
@@ -52,7 +52,7 @@ public class BuyTicket <T>
         if(validTicket != null)
         {
             System.out.println("This ticket does not exist.");
-            return;
+            return false;
         }
         else{
         	//select flight_id from ticket where ticket_id=" + ticket_id
@@ -93,7 +93,7 @@ public class BuyTicket <T>
                 System.out.println("Do you want to purchase?\n 1-YES 0-NO");
                 int purch = in.nextInt();
                 if (purch == 0)
-                    return;
+                    return false;
 
                 flight = FlightCollection.getFlightInfo(flight_id);
                 int airplane_id = flight.getAirplane().getAirplaneID();
@@ -135,15 +135,17 @@ public class BuyTicket <T>
                 }
                 TicketDao ticketDao=new TicketDao();
                 ticketDao.updateTicket(ticket);
+                return true;
             } catch (PatternSyntaxException patternException)
             {
                 patternException.printStackTrace();
             }
         }
+        return false;
     }
     
 	@SuppressWarnings("null")
-	public void buyTicket(int ticket_id_first, int ticket_id_second) throws Exception{
+	public boolean buyTicket(int ticket_id_first, int ticket_id_second) throws Exception{
 		 //method for buying two tickets with transfer flight
         int flight_id_first = 0;
         
@@ -163,7 +165,7 @@ public class BuyTicket <T>
          if(validTicketfirst!=null || validTicketSecond!=null)
         {
             System.out.println("This ticket does not exist.");
-            return;
+            return false;
         }
 
         else
@@ -206,7 +208,7 @@ public class BuyTicket <T>
                 System.out.println("Do you want to purchase?\n 1-YES 0-NO");
                 int purch = in.nextInt();
                 if (purch == 0)
-                    return;
+                    return false;
 
               //  "select * from flight, airplane where flight_id=" + flight_id_first + " and flight.airplane_id=airplane.airplane_id");
                 Flight flight_first = FlightCollection.getFlightInfo(flight_id_first);
@@ -285,6 +287,7 @@ public class BuyTicket <T>
                 TicketDao ticketDao=new TicketDao();
                 ticketDao.updateTicket(ticket_first);
                 ticketDao.updateTicket(ticket_second);
+                return true;
 
             } catch (PatternSyntaxException patternException)
             {
@@ -292,6 +295,6 @@ public class BuyTicket <T>
             }
         }
 
+        return false;
     }
-
 }
