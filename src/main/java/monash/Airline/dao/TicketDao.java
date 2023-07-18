@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketDao {
-    public List<Ticket> getAllTickets() {
-        List<Ticket> tickets = new ArrayList<>();
+    public ArrayList<Ticket> getAllTickets() {
+        ArrayList<Ticket> tickets = new ArrayList<>();
 
         try (Connection connection = DatabaseUtil.getConnection()) {
             String sql = "SELECT * FROM ticket";
@@ -26,9 +26,9 @@ public class TicketDao {
 
                 // Retrieve flight and passenger information
                 FlightDao flightDao = new FlightDao();
-                Flight flight = flightDao.getFlightByID(resultSet.getInt("flight_id"));
+                Flight flight = flightDao.getFlightByID(resultSet.getInt("FlightID"));
                 PassengerDao passengerDao = new PassengerDao();
-                Passenger passenger = passengerDao.getPassengerByID(resultSet.getInt("passenger_id"));
+                Passenger passenger = passengerDao.getPassengerByID(resultSet.getInt("PassengerID"));
 
                 Ticket ticket = new Ticket(ticket_id, price, flight, classVip, passenger);
                 ticket.setTicketStatus(status);

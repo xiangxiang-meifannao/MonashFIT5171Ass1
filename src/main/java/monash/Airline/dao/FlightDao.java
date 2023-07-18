@@ -27,7 +27,7 @@ public class FlightDao {
                 String company = resultSet.getString("company");
                 Timestamp dateFrom = resultSet.getTimestamp("dateFrom");
                 Timestamp dateTo = resultSet.getTimestamp("dateTo");
-                int airplaneID = resultSet.getInt("airplaneID");
+                int airplaneID = resultSet.getInt("AirplaneID");
                 AirplaneDao airplaneDao = new AirplaneDao();
                 Airplane airplane = airplaneDao.getAirplaneByID(airplaneID);
                 Flight flight = new Flight(flightID, departTo, departFrom, code, company, dateFrom, dateTo, airplane);
@@ -58,7 +58,7 @@ public class FlightDao {
                 String company = resultSet.getString("company");
                 Timestamp dateFrom = resultSet.getTimestamp("dateFrom");
                 Timestamp dateTo = resultSet.getTimestamp("dateTo");
-                int airplaneID = resultSet.getInt("airplaneID");
+                int airplaneID = resultSet.getInt("AirplaneID");
 
                 AirplaneDao airplaneDao = new AirplaneDao();
                 Airplane airplane = airplaneDao.getAirplaneByID(airplaneID);
@@ -78,22 +78,12 @@ public class FlightDao {
         ArrayList<Flight> flights = new ArrayList<>();
 
         try (Connection connection = DatabaseUtil.getConnection()) {
-            String sql = "SELECT f.flightID, f.departTo, f.departFrom, f.code, f.company, f.dateFrom, f.dateTo, a.airplaneID, a.airplaneModel, a.businessSitsNumber, a.economySitsNumber, a.crewSitsNumber " +
-                    "FROM flight f " +
-                    "INNER JOIN airplane a ON f.airplaneID = a.airplaneID " +
-                    "WHERE f.departTo = ?";
+            String sql = "SELECT * FROM flight WHERE departTo = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, departTo);
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
-                Airplane airplane = new Airplane();
-                airplane.setAirplaneID(resultSet.getInt("airplaneID"));
-                airplane.setAirplaneModel(resultSet.getString("airplaneModel"));
-                airplane.setBusinessSitsNumber(resultSet.getInt("businessSitsNumber"));
-                airplane.setEconomySitsNumber(resultSet.getInt("economySitsNumber"));
-                airplane.setCrewSitsNumber(resultSet.getInt("crewSitsNumber"));
-
                 Flight flight = new Flight();
                 flight.setFlightID(resultSet.getInt("flightID"));
                 flight.setDepartTo(resultSet.getString("departTo"));
@@ -102,6 +92,9 @@ public class FlightDao {
                 flight.setCompany(resultSet.getString("company"));
                 flight.setDateFrom(resultSet.getTimestamp("dateFrom"));
                 flight.setDateTo(resultSet.getTimestamp("dateTo"));
+                int airplaneID = resultSet.getInt("AirplaneID");
+                AirplaneDao airplaneDao = new AirplaneDao();
+                Airplane airplane = airplaneDao.getAirplaneByID(airplaneID);
                 flight.setAirplane(airplane);
 
                 flights.add(flight);
@@ -120,22 +113,12 @@ public class FlightDao {
         ArrayList<Flight> flights = new ArrayList<>();
 
         try (Connection connection = DatabaseUtil.getConnection()) {
-            String sql = "SELECT f.flightID, f.departTo, f.departFrom, f.code, f.company, f.dateFrom, f.dateTo, a.airplaneID, a.airplaneModel, a.businessSitsNumber, a.economySitsNumber, a.crewSitsNumber " +
-                    "FROM flight f " +
-                    "INNER JOIN airplane a ON f.airplaneID = a.airplaneID " +
-                    "WHERE f.departFrom = ? AND f.departTo = ?";
+            String sql = "SELECT * FROM flight WHERE departFrom = ? AND departTo = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, departTo);
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
-                Airplane airplane = new Airplane();
-                airplane.setAirplaneID(resultSet.getInt("airplaneID"));
-                airplane.setAirplaneModel(resultSet.getString("airplaneModel"));
-                airplane.setBusinessSitsNumber(resultSet.getInt("businessSitsNumber"));
-                airplane.setEconomySitsNumber(resultSet.getInt("economySitsNumber"));
-                airplane.setCrewSitsNumber(resultSet.getInt("crewSitsNumber"));
-
                 Flight flight = new Flight();
                 flight.setFlightID(resultSet.getInt("flightID"));
                 flight.setDepartTo(resultSet.getString("departTo"));
@@ -144,6 +127,9 @@ public class FlightDao {
                 flight.setCompany(resultSet.getString("company"));
                 flight.setDateFrom(resultSet.getTimestamp("dateFrom"));
                 flight.setDateTo(resultSet.getTimestamp("dateTo"));
+                int airplaneID = resultSet.getInt("AirplaneID");
+                AirplaneDao airplaneDao = new AirplaneDao();
+                Airplane airplane = airplaneDao.getAirplaneByID(airplaneID);
                 flight.setAirplane(airplane);
 
                 flights.add(flight);
@@ -162,7 +148,7 @@ public class FlightDao {
 
     public void addFlight(Flight flight) {
         try (Connection connection = DatabaseUtil.getConnection()) {
-            String sql = "INSERT INTO flight (departTo, departFrom, code, company, dateFrom, dateTo, airplaneID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO flight (departTo, departFrom, code, company, dateFrom, dateTo, AirplaneID) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, flight.getDepartTo());
             statement.setString(2, flight.getDepartFrom());
@@ -182,7 +168,7 @@ public class FlightDao {
 
     public void updateFlight(Flight flight) {
         try (Connection connection = DatabaseUtil.getConnection()) {
-            String sql = "UPDATE flight SET departTo = ?, departFrom = ?, code = ?, company = ?, dateFrom = ?, dateTo = ?, airplaneID = ? WHERE flightID = ?";
+            String sql = "UPDATE flight SET departTo = ?, departFrom = ?, code = ?, company = ?, dateFrom = ?, dateTo = ?, AirplaneID = ? WHERE flightID = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, flight.getDepartTo());
             statement.setString(2, flight.getDepartFrom());
