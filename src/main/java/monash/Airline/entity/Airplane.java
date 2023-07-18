@@ -17,6 +17,10 @@ public class Airplane
         this.crewSitsNumber = crewSitsNumber;
     }
 
+    public Airplane() {
+
+    }
+
     public int getAirplaneID() {
         return airplaneID;
     }

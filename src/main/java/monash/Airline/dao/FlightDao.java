@@ -11,8 +11,8 @@ import java.util.List;
 
 //用于实现对实体类Flight的相关数据库操作
 public class FlightDao {
-    public List<Flight> getAllFlights() {
-        List<Flight> flights = new ArrayList<>();
+    public ArrayList<Flight> getAllFlights() {
+        ArrayList<Flight> flights = new ArrayList<>();
 
         try (Connection connection = DatabaseUtil.getConnection()) {
             String sql = "SELECT * FROM flight";
@@ -28,9 +28,8 @@ public class FlightDao {
                 Timestamp dateFrom = resultSet.getTimestamp("dateFrom");
                 Timestamp dateTo = resultSet.getTimestamp("dateTo");
                 int airplaneID = resultSet.getInt("airplaneID");
-
-                Airplane airplane = getAirplaneByID(airplaneID);
-
+                AirplaneDao airplaneDao = new AirplaneDao();
+                Airplane airplane = airplaneDao.getAirplaneByID(airplaneID);
                 Flight flight = new Flight(flightID, departTo, departFrom, code, company, dateFrom, dateTo, airplane);
                 flights.add(flight);
             }
@@ -40,7 +39,6 @@ public class FlightDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return flights;
     }
 
@@ -62,8 +60,8 @@ public class FlightDao {
                 Timestamp dateTo = resultSet.getTimestamp("dateTo");
                 int airplaneID = resultSet.getInt("airplaneID");
 
-                Airplane airplane = getAirplaneByID(airplaneID);
-
+                AirplaneDao airplaneDao = new AirplaneDao();
+                Airplane airplane = airplaneDao.getAirplaneByID(airplaneID);
                 flight = new Flight(flightID, departTo, departFrom, code, company, dateFrom, dateTo, airplane);
             }
 
@@ -76,27 +74,36 @@ public class FlightDao {
         return flight;
     }
 
-    public List<Flight> getFlightsByDepartTo(String departTo) {
-        List<Flight> flights = new ArrayList<>();
+    public ArrayList<Flight> getFlightsByDepartTo(String departTo) {
+        ArrayList<Flight> flights = new ArrayList<>();
 
         try (Connection connection = DatabaseUtil.getConnection()) {
-            String sql = "SELECT * FROM flight WHERE departTo = ?";
+            String sql = "SELECT f.flightID, f.departTo, f.departFrom, f.code, f.company, f.dateFrom, f.dateTo, a.airplaneID, a.airplaneModel, a.businessSitsNumber, a.economySitsNumber, a.crewSitsNumber " +
+                    "FROM flight f " +
+                    "INNER JOIN airplane a ON f.airplaneID = a.airplaneID " +
+                    "WHERE f.departTo = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, departTo);
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                int flightID = resultSet.getInt("flightID");
-                String departFrom = resultSet.getString("departFrom");
-                String code = resultSet.getString("code");
-                String company = resultSet.getString("company");
-                Timestamp dateFrom = resultSet.getTimestamp("dateFrom");
-                Timestamp dateTo = resultSet.getTimestamp("dateTo");
-                int airplaneID = resultSet.getInt("airplaneID");
+            while(resultSet.next()) {
+                Airplane airplane = new Airplane();
+                airplane.setAirplaneID(resultSet.getInt("airplaneID"));
+                airplane.setAirplaneModel(resultSet.getString("airplaneModel"));
+                airplane.setBusinessSitsNumber(resultSet.getInt("businessSitsNumber"));
+                airplane.setEconomySitsNumber(resultSet.getInt("economySitsNumber"));
+                airplane.setCrewSitsNumber(resultSet.getInt("crewSitsNumber"));
 
-                Airplane airplane = getAirplaneByID(airplaneID);
+                Flight flight = new Flight();
+                flight.setFlightID(resultSet.getInt("flightID"));
+                flight.setDepartTo(resultSet.getString("departTo"));
+                flight.setDepartFrom(resultSet.getString("departFrom"));
+                flight.setCode(resultSet.getString("code"));
+                flight.setCompany(resultSet.getString("company"));
+                flight.setDateFrom(resultSet.getTimestamp("dateFrom"));
+                flight.setDateTo(resultSet.getTimestamp("dateTo"));
+                flight.setAirplane(airplane);
 
-                Flight flight = new Flight(flightID, departTo, departFrom, code, company, dateFrom, dateTo, airplane);
                 flights.add(flight);
             }
 
@@ -108,6 +115,50 @@ public class FlightDao {
 
         return flights;
     }
+
+    public ArrayList<Flight> getFlightsByDepartFromAndDepartTo(String departFrom, String departTo) {
+        ArrayList<Flight> flights = new ArrayList<>();
+
+        try (Connection connection = DatabaseUtil.getConnection()) {
+            String sql = "SELECT f.flightID, f.departTo, f.departFrom, f.code, f.company, f.dateFrom, f.dateTo, a.airplaneID, a.airplaneModel, a.businessSitsNumber, a.economySitsNumber, a.crewSitsNumber " +
+                    "FROM flight f " +
+                    "INNER JOIN airplane a ON f.airplaneID = a.airplaneID " +
+                    "WHERE f.departFrom = ? AND f.departTo = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, departTo);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                Airplane airplane = new Airplane();
+                airplane.setAirplaneID(resultSet.getInt("airplaneID"));
+                airplane.setAirplaneModel(resultSet.getString("airplaneModel"));
+                airplane.setBusinessSitsNumber(resultSet.getInt("businessSitsNumber"));
+                airplane.setEconomySitsNumber(resultSet.getInt("economySitsNumber"));
+                airplane.setCrewSitsNumber(resultSet.getInt("crewSitsNumber"));
+
+                Flight flight = new Flight();
+                flight.setFlightID(resultSet.getInt("flightID"));
+                flight.setDepartTo(resultSet.getString("departTo"));
+                flight.setDepartFrom(resultSet.getString("departFrom"));
+                flight.setCode(resultSet.getString("code"));
+                flight.setCompany(resultSet.getString("company"));
+                flight.setDateFrom(resultSet.getTimestamp("dateFrom"));
+                flight.setDateTo(resultSet.getTimestamp("dateTo"));
+                flight.setAirplane(airplane);
+
+                flights.add(flight);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flights;
+    }
+
+
 
     public void addFlight(Flight flight) {
         try (Connection connection = DatabaseUtil.getConnection()) {
@@ -147,32 +198,5 @@ public class FlightDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private Airplane getAirplaneByID(int airplaneID) {
-        Airplane airplane = null;
-
-        try (Connection connection = DatabaseUtil.getConnection()) {
-            String sql = "SELECT * FROM airplane WHERE airplaneID = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, airplaneID);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                String airplaneModel = resultSet.getString("airplaneModel");
-                int businessSitsNumber = resultSet.getInt("businessSitsNumber");
-                int economySitsNumber = resultSet.getInt("economySitsNumber");
-                int crewSitsNumber = resultSet.getInt("crewSitsNumber");
-
-                airplane = new Airplane(airplaneID, airplaneModel, businessSitsNumber, economySitsNumber, crewSitsNumber);
-            }
-
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return airplane;
     }
 }
