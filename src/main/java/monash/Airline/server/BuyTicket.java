@@ -107,6 +107,8 @@ public class BuyTicket <T>
                 else
                     airplane.setEconomySitsNumber(airplane.getEconomySitsNumber() - 1);
 
+
+                ticket.setPassenger(passenger);
                 ticket.setTicket_id(ticket_id);
                 flight.setAirplane(airplane);
                 ticket.setFlight(flight);
@@ -137,6 +139,7 @@ public class BuyTicket <T>
                 }
                 TicketDao ticketDao=new TicketDao();
                 ticketDao.updateTicket(ticket);
+                System.out.println("购票成功！");
                 return true;
             } catch (PatternSyntaxException patternException)
             {
@@ -241,6 +244,8 @@ public class BuyTicket <T>
 
                 System.out.println("--*-*-");
 
+
+                ticket.setPassenger(passenger);
                 ticket_first.setPassenger(passenger);
                 ticket_first.setTicket_id(ticket_id_first);
                 flight_first.setAirplane(airplane_first);

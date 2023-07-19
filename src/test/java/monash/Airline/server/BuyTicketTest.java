@@ -2,13 +2,9 @@ package monash.Airline.server;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.Scanner;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.Scanner;
 
 public class BuyTicketTest {
 
@@ -22,9 +18,9 @@ public class BuyTicketTest {
             int ticketId = 1;
 
             // 模拟用户输入
-            String userInput = "John\nDoe\n25\nMale\njohn.doe@example.com\n1234567890\nABC123456\n1\n";
-            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
-            System.setIn(inputStream);
+//            String userInput = "Touch\nLee\n29\nFemale\njohn.doe@example.com\n1234567890\nABC123456\n1\n";
+//            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
+//            System.setIn(inputStream);
 
             // 调用buyTicket方法
             boolean isPurchased = buyTicket.buyTicket(ticketId);
@@ -51,9 +47,9 @@ public class BuyTicketTest {
             int ticketIdSecond = 2;
 
             // 模拟用户输入
-            String userInput = "John\nDoe\n25\nMale\njohn.doe@example.com\n1234567890\nABC123456\n1\n";
-            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
-            System.setIn(inputStream);
+//            String userInput = "John\nDoe\n25\nMale\njohn.doe@example.com\n1234567890\nABC123456\n1\n";
+//            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
+//            System.setIn(inputStream);
 
             // 调用buyTicket方法
             boolean arePurchased = buyTicket.buyTicket(ticketIdFirst, ticketIdSecond);

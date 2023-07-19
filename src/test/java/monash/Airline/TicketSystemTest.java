@@ -17,9 +17,9 @@ public class TicketSystemTest {
 
         try {
             // 设置模拟输入值
-            String userInput = "CityA\nCityB\n1\n";
-            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
-            System.setIn(inputStream);
+//            String userInput = "CityA\nCityB\n1\n";
+//            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
+//            System.setIn(inputStream);
 
             // 调用TicketSystem的main方法
             TicketSystem.main(new String[]{});

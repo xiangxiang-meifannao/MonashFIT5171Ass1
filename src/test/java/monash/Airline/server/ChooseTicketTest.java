@@ -11,17 +11,16 @@ public class ChooseTicketTest {
     public void testChooseDirectTicket() {
         // 创建ChooseTicket的实例
         ChooseTicket chooseTicket = new ChooseTicket();
-        BuyTicket buyTicket = new BuyTicket();
 
         try {
             // 使用有效的城市名称调用chooseTicket方法
-            String city1 = "CityA";
-            String city2 = "CityB";
+            String city1 = "ShangHai";
+            String city2 = "BeiJing";
 
             // 设置模拟输入值
-            String userInput = "1\n";
-            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
-            System.setIn(inputStream);
+//            String userInput = "1\n";
+//            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
+//            System.setIn(inputStream);
 
             // 调用chooseTicket方法
             boolean isChosen = chooseTicket.chooseTicket(city1, city2);
@@ -45,13 +44,13 @@ public class ChooseTicketTest {
 
         try {
             // 使用无效的城市名称调用chooseTicket方法
-            String city1 = "CityA";
-            String city2 = "CityC";
+            String city1 = "Chengdu";
+            String city2 = "BeiJing";
 
             // 设置模拟输入值
-            String userInput = "1\n";
-            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
-            System.setIn(inputStream);
+//            String userInput = "1\n";
+//            InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
+//            System.setIn(inputStream);
 
             // 调用chooseTicket方法
             boolean isChosen = chooseTicket.chooseTicket(city1, city2);
