@@ -115,7 +115,8 @@ public class FlightDao {
         try (Connection connection = DatabaseUtil.getConnection()) {
             String sql = "SELECT * FROM flight WHERE departFrom = ? AND departTo = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, departTo);
+            statement.setString(1, departFrom);
+            statement.setString(2, departTo);
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
@@ -146,10 +147,11 @@ public class FlightDao {
 
 
 
-    public void addFlight(Flight flight) {
+    public int addFlight(Flight flight) {
+        int generatedID = -1;
         try (Connection connection = DatabaseUtil.getConnection()) {
             String sql = "INSERT INTO flight (departTo, departFrom, code, company, dateFrom, dateTo, AirplaneID) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, flight.getDepartTo());
             statement.setString(2, flight.getDepartFrom());
             statement.setString(3, flight.getCode());
@@ -159,11 +161,16 @@ public class FlightDao {
             statement.setInt(7, flight.getAirplane().getAirplaneID());
 
             statement.executeUpdate();
-
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                generatedID = generatedKeys.getInt(1);
+            }
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return generatedID;
     }
 
     public void updateFlight(Flight flight) {

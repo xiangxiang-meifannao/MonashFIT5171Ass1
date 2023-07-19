@@ -15,7 +15,6 @@ public class PassengerDaoTest {
         ArrayList<Passenger> passengers = passengerDao.getAllPassengers();
         // 进行断言，确保获取到的乘客列表不为空
         Assertions.assertNotNull(passengers);
-        // 其他适当的断言
     }
 
     @Test
@@ -27,7 +26,6 @@ public class PassengerDaoTest {
 
         // 进行断言，确保获取到的乘客不为null
         Assertions.assertNotNull(passenger);
-        // 其他适当的断言
     }
 
     @Test
@@ -50,7 +48,6 @@ public class PassengerDaoTest {
 
         // 进行断言，确保添加成功或进行其他适当的验证
         Assertions.assertNotEquals(-1, generatedID);
-        // 可以通过查询数据库或调用其他方法来验证添加结果
     }
 
 }

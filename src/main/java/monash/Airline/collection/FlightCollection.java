@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class FlightCollection {
 	
 	public static ArrayList<Flight> flights;
-	public static FlightDao flightDao;
+	public static FlightDao flightDao = new FlightDao();
 
 	public static ArrayList<Flight> getFlights() {
 		return flights;
@@ -39,6 +39,5 @@ public class FlightCollection {
 		Flight result = flightDao.getFlightByID(flight_id);
     	return result;
     }
-    
 
 }

@@ -60,10 +60,9 @@ public class TicketDao {
 
                 // Retrieve flight and passenger information
                 FlightDao flightDao = new FlightDao();
-                Flight flight = flightDao.getFlightByID(resultSet.getInt("flight_id"));
+                Flight flight = flightDao.getFlightByID(resultSet.getInt("flightID"));
                 PassengerDao passengerDao = new PassengerDao();
-                Passenger passenger = passengerDao.getPassengerByID(resultSet.getInt("passenger_id"));
-
+                Passenger passenger = passengerDao.getPassengerByID(resultSet.getInt("passengerID"));
                 ticket = new Ticket(ticketID, price, flight, classVip, passenger);
                 ticket.setTicketStatus(status);
             }

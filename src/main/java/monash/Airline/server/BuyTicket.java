@@ -20,6 +20,8 @@ public class BuyTicket <T>
     Flight flight = new Flight();
     Scanner in = new Scanner(System.in);
 
+    AirplaneDao airplaneDao = new AirplaneDao();
+
     public BuyTicket()
     {
          passenger = new Passenger();
@@ -49,7 +51,7 @@ public class BuyTicket <T>
         Ticket validTicket = TicketCollection.getTicketInfo(ticket_id);
        
         //if there is a valid ticket id was input then we buy it, otherwise show message
-        if(validTicket != null)
+        if(validTicket == null)
         {
             System.out.println("This ticket does not exist.");
             return false;
@@ -71,7 +73,7 @@ public class BuyTicket <T>
                 passenger.setSecondName(secondName); //setting passengers info
 
                 System.out.println("Enter your age:");
-                Integer age = in.nextInt();
+                Integer age = Integer.parseInt(in.nextLine());
                 passenger.setAge(age);
 
                 System.out.println("Enter your gender: ");
@@ -91,13 +93,13 @@ public class BuyTicket <T>
                 passenger.setPassport(passportNumber);
 
                 System.out.println("Do you want to purchase?\n 1-YES 0-NO");
-                int purch = in.nextInt();
+                int purch = Integer.parseInt(in.nextLine());
                 if (purch == 0)
                     return false;
 
                 flight = FlightCollection.getFlightInfo(flight_id);
                 int airplane_id = flight.getAirplane().getAirplaneID();
-                Airplane airplane = Airplane.getAirPlaneInfo(airplane_id);
+                Airplane airplane = airplaneDao.getAirplaneByID(airplane_id);
                 ticket = TicketCollection.getTicketInfo(ticket_id);
 
                 if (ticket.getClassVip() == true)
@@ -119,7 +121,7 @@ public class BuyTicket <T>
                 passenger.setCardNumber(cardNumber);
 
                 System.out.println("Enter your security code:");
-                Integer securityCode = in.nextInt();
+                Integer securityCode = Integer.parseInt(in.nextLine());
                 passenger.setSecurityCode(securityCode);
 
                 //更新数据
@@ -162,7 +164,7 @@ public class BuyTicket <T>
         
         //if there is a valid ticket id was input then we buy it, otherwise show message
         
-         if(validTicketfirst!=null || validTicketSecond!=null)
+         if(validTicketfirst==null || validTicketSecond==null)
         {
             System.out.println("This ticket does not exist.");
             return false;
@@ -186,7 +188,7 @@ public class BuyTicket <T>
                 passenger.setSecondName(secondName); //setting passengers info
 
                 System.out.println("Enter your age:");
-                Integer age = in.nextInt();
+                Integer age = Integer.parseInt(in.nextLine());
                 passenger.setAge(age);
 
                 System.out.println("Enter your gender: ");
@@ -206,7 +208,7 @@ public class BuyTicket <T>
                 passenger.setPassport(passportNumber);
 
                 System.out.println("Do you want to purchase?\n 1-YES 0-NO");
-                int purch = in.nextInt();
+                int purch = Integer.parseInt(in.nextLine());
                 if (purch == 0)
                     return false;
 
@@ -215,13 +217,13 @@ public class BuyTicket <T>
 
                 int airplane_id_first = flight_first.getAirplane().getAirplaneID();
 
-                Airplane airplane_first = Airplane.getAirPlaneInfo(airplane_id_first);
+                Airplane airplane_first = airplaneDao.getAirplaneByID(airplane_id_first);
 
                 Flight flight_second = FlightCollection.getFlightInfo(flight_id_second);
 
                 int airplane_id_second = flight_second.getAirplane().getAirplaneID();
 
-                Airplane airplane_second  = Airplane.getAirPlaneInfo(airplane_id_second);
+                Airplane airplane_second  = airplaneDao.getAirplaneByID(airplane_id_second);
 
                 Ticket ticket_first = TicketCollection.getTicketInfo(ticket_id_first);
 
@@ -265,7 +267,7 @@ public class BuyTicket <T>
                 passenger.setCardNumber(cardNumber);
 
                 System.out.println("Enter your security code:");
-                Integer securityCode = in.nextInt();
+                Integer securityCode = Integer.parseInt(in.nextLine());
                 passenger.setSecurityCode(securityCode);
 
                 //更新数据

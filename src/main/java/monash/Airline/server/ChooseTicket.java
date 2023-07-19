@@ -29,7 +29,12 @@ public class ChooseTicket{
         if(flight != null) {
 
 			ArrayList<Ticket> tickets = TicketCollection.getAllTickets();
-
+			for (Ticket ticket : tickets) {
+				System.out.println("ticket_id=" + ticket.getTicket_id() +
+						", price=" + ticket.getPrice() +
+						", date=" + ticket.getFlight().getDateTo() +
+						", classVip=" + ticket.getClassVip());
+			}
 			System.out.println("\nEnter ID of ticket you want to choose:");
 
 	        int ticket_id = in.nextInt();

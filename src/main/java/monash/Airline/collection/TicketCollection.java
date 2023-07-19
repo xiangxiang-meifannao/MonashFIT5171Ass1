@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class TicketCollection {
 	
 	public static ArrayList<Ticket> tickets;
-	public static TicketDao ticketDao;
+	public static TicketDao ticketDao = new TicketDao();;
 
 	public static ArrayList<Ticket> getTickets() {
 		return tickets;
@@ -22,9 +22,6 @@ public class TicketCollection {
 	public static ArrayList<Ticket> getAllTickets() {
     	//display all available tickets from the Ticket collection
 		ArrayList<Ticket> allTickets = ticketDao.getAllTickets();
-		for (Ticket ticket : allTickets) {
-			System.out.println(ticket.toString());
-		}
 		return allTickets;
 	}
 	public static Ticket getTicketInfo(int ticket_id) {

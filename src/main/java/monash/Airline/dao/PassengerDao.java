@@ -61,6 +61,7 @@ public class PassengerDao {
                 int age = resultSet.getInt("age");
                 String gender = resultSet.getString("gender");
                 passenger = new Passenger(firstName, secondName, age, gender, email, phoneNumber, passport, cardNumber, securityCode);
+                passenger.setPassengerID(passengerID);
             }
 
             resultSet.close();

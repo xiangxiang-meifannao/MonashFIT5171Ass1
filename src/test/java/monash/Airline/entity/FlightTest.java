@@ -66,8 +66,8 @@ class FlightTest {
 
 
             // Check if date and time fields are set correctly
-            assertEquals("01/01/23 10:00:00", dateFormat.format(flight.getDateFrom()));
-            assertEquals("02/01/23 11:00:00", dateFormat.format(flight.getDateTo()));
+            assertEquals("18/07/23 12:34:56", dateFormat.format(flight.getDateFrom()));
+            assertEquals("18/07/23 13:34:56", dateFormat.format(flight.getDateTo()));
         }catch (AssertionError e){
             System.out.println("测试失败：" + e.getMessage());
         } catch(ParseException e){
